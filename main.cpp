@@ -1,7 +1,6 @@
 #include <iostream>
 #include <time.h>
 #include <cmath>
-#include <math.h>
 
 
 #define LONGITUDE 81.68
@@ -36,14 +35,15 @@ int main() {
     double sunrise = get_sunrise(solar_transit, hour_angle);
     double sunset = get_sunset(solar_transit, hour_angle);
 
-    printf("SUNRISE: %.3f \r\n", sunrise);
-    printf("SUNSET: %.3f \r\n", sunset);
+    printf("SUNRISE: %.5f \r\n", sunrise);
+    printf("SUNSET: %.5f \r\n", sunset);
+    printf("DAY LENGTH: %.5f \r\n", sunset - sunrise);
     return EXIT_SUCCESS;
 }
 
 double get_julian_time() {
     int unixSecs = (int) time(NULL);
-    return ( unixSecs / 86400.0 ) + 2440587.0;/*TODO: add 0.5 to this number?*/
+    return ( unixSecs / 86400.0 ) + 2440587.0;
 }
 
 double get_julian_date_cycle(double julian_time){
@@ -76,7 +76,7 @@ double get_solar_transit(double approximate_solar_noon, double solar_mean_anomal
 }
 
 double get_declination_of_sun(double ecliptic_longitude){
-    return asin(sin(ecliptic_longitude TO_RAD)*sin(23.45 TO_RAD)) TO_DEG;/*TO_RAD again?*/
+    return asin(sin(ecliptic_longitude TO_RAD)*sin(23.45 TO_RAD)) TO_DEG;
 }
 
 double get_hour_angle(double declination_of_sun){
