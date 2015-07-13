@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Atmel Studio Solution File, Format Version 11.00
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "Betamax", "Betamax\Betamax.cproj", "{D183EAB3-CBD3-4EA9-AA73-34D3BB854A91}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D183EAB3-CBD3-4EA9-AA73-34D3BB854A91}.Debug|AVR.ActiveCfg = Debug|AVR
+		{D183EAB3-CBD3-4EA9-AA73-34D3BB854A91}.Debug|AVR.Build.0 = Debug|AVR
+		{D183EAB3-CBD3-4EA9-AA73-34D3BB854A91}.Release|AVR.ActiveCfg = Release|AVR
+		{D183EAB3-CBD3-4EA9-AA73-34D3BB854A91}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

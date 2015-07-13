@@ -1,0 +1,1034 @@
+
+Betamax.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000004  00800100  000005e2  00000676  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         000005e2  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .bss          0000002b  00800104  00800104  0000067a  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  0000067a  2**0
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000130  00000000  00000000  000006aa  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   000012fa  00000000  00000000  000007da  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 00000711  00000000  00000000  00001ad4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   00000748  00000000  00000000  000021e5  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000288  00000000  00000000  00002930  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    00000549  00000000  00000000  00002bb8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    00000b74  00000000  00000000  00003101  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 000000f0  00000000  00000000  00003c75  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+#if !MEGA_XX_UN0 && !MEGA_XX_UN1
+	uint8_t *reg = (uint8_t *)&(POWER_REG_ADD);
+	uint8_t i;
+	/* Turn off all peripheral clocks that can be turned off. */
+	for (i = 0; i < NUMBER_OF_POWER_REG; i++) {
+		*(reg++) = 0xFF;
+   0:	0c 94 34 00 	jmp	0x68	; 0x68 <__ctors_end>
+   4:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+	}
+#endif
+#if !MEGA_UNSPECIFIED && !MEGA_XX
+	/* Set up system clock prescalers if different from defaults */
+	if ((CONFIG_SYSCLK_PSDIV != SYSCLK_PSDIV_8) ||
+			(SYSCLK_PSDIV_8 != CLKPR)) {
+   8:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+		*(reg++) = 0xFF;
+	}
+#endif
+#if !MEGA_UNSPECIFIED && !MEGA_XX
+	/* Set up system clock prescalers if different from defaults */
+	if ((CONFIG_SYSCLK_PSDIV != SYSCLK_PSDIV_8) ||
+   c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+typedef uint8_t irqflags_t;
+
+static inline irqflags_t cpu_irq_save(void)
+{
+	irqflags_t flags = SREG;
+	cpu_irq_disable();
+  10:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+static inline void sysclk_set_prescalers(uint8_t psdiv)
+{
+#if !MEGA_UNSPECIFIED
+	irqflags_t flags = cpu_irq_save();
+
+	ASM(
+  14:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  18:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  1c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  20:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+}
+
+static inline void cpu_irq_restore(irqflags_t flags)
+{
+	barrier();
+	SREG = flags;
+  24:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  28:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  2c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  30:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  34:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  38:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  3c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  40:	0c 94 cf 00 	jmp	0x19e	; 0x19e <__vector_16>
+  44:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  48:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  4c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  50:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  54:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  58:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  5c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  60:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  64:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+
+00000068 <__ctors_end>:
+  68:	11 24       	eor	r1, r1
+  6a:	1f be       	out	0x3f, r1	; 63
+  6c:	cf ef       	ldi	r28, 0xFF	; 255
+  6e:	d4 e0       	ldi	r29, 0x04	; 4
+  70:	de bf       	out	0x3e, r29	; 62
+  72:	cd bf       	out	0x3d, r28	; 61
+
+00000074 <__do_copy_data>:
+  74:	11 e0       	ldi	r17, 0x01	; 1
+  76:	a0 e0       	ldi	r26, 0x00	; 0
+  78:	b1 e0       	ldi	r27, 0x01	; 1
+  7a:	e2 ee       	ldi	r30, 0xE2	; 226
+  7c:	f5 e0       	ldi	r31, 0x05	; 5
+  7e:	02 c0       	rjmp	.+4      	; 0x84 <__do_copy_data+0x10>
+  80:	05 90       	lpm	r0, Z+
+  82:	0d 92       	st	X+, r0
+  84:	a4 30       	cpi	r26, 0x04	; 4
+  86:	b1 07       	cpc	r27, r17
+  88:	d9 f7       	brne	.-10     	; 0x80 <__do_copy_data+0xc>
+
+0000008a <__do_clear_bss>:
+  8a:	21 e0       	ldi	r18, 0x01	; 1
+  8c:	a4 e0       	ldi	r26, 0x04	; 4
+  8e:	b1 e0       	ldi	r27, 0x01	; 1
+  90:	01 c0       	rjmp	.+2      	; 0x94 <.do_clear_bss_start>
+
+00000092 <.do_clear_bss_loop>:
+  92:	1d 92       	st	X+, r1
+
+00000094 <.do_clear_bss_start>:
+  94:	af 32       	cpi	r26, 0x2F	; 47
+  96:	b2 07       	cpc	r27, r18
+  98:	e1 f7       	brne	.-8      	; 0x92 <.do_clear_bss_loop>
+  9a:	0e 94 5c 00 	call	0xb8	; 0xb8 <main>
+  9e:	0c 94 ef 02 	jmp	0x5de	; 0x5de <_exit>
+
+000000a2 <__bad_interrupt>:
+  a2:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+000000a6 <setAllBrightness>:
+		compbuff[3] = 255;
+		delay_ms(500);
+    }
+}
+
+void setAllBrightness(int newBrightness){
+  a6:	ef e0       	ldi	r30, 0x0F	; 15
+  a8:	f1 e0       	ldi	r31, 0x01	; 1
+  aa:	2b e1       	ldi	r18, 0x1B	; 27
+  ac:	31 e0       	ldi	r19, 0x01	; 1
+	for(int i=0 ; i<CHMAX ; i++) {
+		compbuff[i] = newBrightness;
+  ae:	81 93       	st	Z+, r24
+		delay_ms(500);
+    }
+}
+
+void setAllBrightness(int newBrightness){
+	for(int i=0 ; i<CHMAX ; i++) {
+  b0:	e2 17       	cp	r30, r18
+  b2:	f3 07       	cpc	r31, r19
+  b4:	e1 f7       	brne	.-8      	; 0xae <setAllBrightness+0x8>
+		compbuff[i] = newBrightness;
+	}
+}
+  b6:	08 95       	ret
+
+000000b8 <main>:
+
+int main(void)
+{
+	
+	//  IO setting of ports
+	DDRB = 0x0F;
+  b8:	8f e0       	ldi	r24, 0x0F	; 15
+  ba:	84 b9       	out	0x04, r24	; 4
+	DDRC = 0b00100000;
+  bc:	80 e2       	ldi	r24, 0x20	; 32
+  be:	87 b9       	out	0x07, r24	; 7
+	DDRD = 0xFF;
+  c0:	8f ef       	ldi	r24, 0xFF	; 255
+  c2:	8a b9       	out	0x0a, r24	; 10
+	int MAX_BRIGHTNESS = 12;
+	Init(); //this is initializing the PWM
+  c4:	0e 94 a6 00 	call	0x14c	; 0x14c <Init>
+	Init_RTC(); //this is initializing the RTC
+  c8:	0e 94 db 02 	call	0x5b6	; 0x5b6 <Init_RTC>
+	//setDS1302Time(0,39,13,1,4,1,2015);
+	delay_us(10);//make sure the time is updated before reading
+	updateTime();
+  cc:	0e 94 59 02 	call	0x4b2	; 0x4b2 <updateTime>
+	setAllBrightness(MAX_BRIGHTNESS);
+  d0:	8c e0       	ldi	r24, 0x0C	; 12
+  d2:	90 e0       	ldi	r25, 0x00	; 0
+  d4:	0e 94 53 00 	call	0xa6	; 0xa6 <setAllBrightness>
+		for(int i=0;i<=7;i++){
+			tempSeconds = seconds; //because the right shift is permanent
+			//compbuff[i] = ((tempSeconds >> i) & 0x01)*MAX_BRIGHTNESS; 
+			//either on or off, depending on if the bit is set
+		}
+		compbuff[0] = 1;
+  d8:	0f 2e       	mov	r0, r31
+  da:	ff e0       	ldi	r31, 0x0F	; 15
+  dc:	cf 2e       	mov	r12, r31
+  de:	f1 e0       	ldi	r31, 0x01	; 1
+  e0:	df 2e       	mov	r13, r31
+  e2:	f0 2d       	mov	r31, r0
+  e4:	55 24       	eor	r5, r5
+  e6:	53 94       	inc	r5
+		compbuff[1] = 0;
+  e8:	0f 2e       	mov	r0, r31
+  ea:	f0 e1       	ldi	r31, 0x10	; 16
+  ec:	ef 2e       	mov	r14, r31
+  ee:	f1 e0       	ldi	r31, 0x01	; 1
+  f0:	ff 2e       	mov	r15, r31
+  f2:	f0 2d       	mov	r31, r0
+		compbuff[2] = 254;
+  f4:	01 e1       	ldi	r16, 0x11	; 17
+  f6:	11 e0       	ldi	r17, 0x01	; 1
+  f8:	0f 2e       	mov	r0, r31
+  fa:	fe ef       	ldi	r31, 0xFE	; 254
+  fc:	6f 2e       	mov	r6, r31
+  fe:	f0 2d       	mov	r31, r0
+		compbuff[3] = 255;
+ 100:	c2 e1       	ldi	r28, 0x12	; 18
+ 102:	d1 e0       	ldi	r29, 0x01	; 1
+ 104:	77 24       	eor	r7, r7
+ 106:	7a 94       	dec	r7
+ 108:	0f 2e       	mov	r0, r31
+ 10a:	fa e2       	ldi	r31, 0x2A	; 42
+ 10c:	8f 2e       	mov	r8, r31
+ 10e:	f0 2d       	mov	r31, r0
+ 110:	0f 2e       	mov	r0, r31
+ 112:	fc e2       	ldi	r31, 0x2C	; 44
+ 114:	9f 2e       	mov	r9, r31
+ 116:	f0 2d       	mov	r31, r0
+ 118:	0f 2e       	mov	r0, r31
+ 11a:	fa e0       	ldi	r31, 0x0A	; 10
+ 11c:	af 2e       	mov	r10, r31
+ 11e:	f0 2d       	mov	r31, r0
+ 120:	b1 2c       	mov	r11, r1
+	delay_us(10);//make sure the time is updated before reading
+	updateTime();
+	setAllBrightness(MAX_BRIGHTNESS);
+    while(1)
+    {//update time, set first 8 strips to binary representation of current seconds
+		updateTime();
+ 122:	0e 94 59 02 	call	0x4b2	; 0x4b2 <updateTime>
+		for(int i=0;i<=7;i++){
+			tempSeconds = seconds; //because the right shift is permanent
+			//compbuff[i] = ((tempSeconds >> i) & 0x01)*MAX_BRIGHTNESS; 
+			//either on or off, depending on if the bit is set
+		}
+		compbuff[0] = 1;
+ 126:	f6 01       	movw	r30, r12
+ 128:	50 82       	st	Z, r5
+		compbuff[1] = 0;
+ 12a:	f7 01       	movw	r30, r14
+ 12c:	10 82       	st	Z, r1
+		compbuff[2] = 254;
+ 12e:	f8 01       	movw	r30, r16
+ 130:	60 82       	st	Z, r6
+		compbuff[3] = 255;
+ 132:	78 82       	st	Y, r7
+ 134:	88 2d       	mov	r24, r8
+ 136:	99 2d       	mov	r25, r9
+ 138:	aa 2d       	mov	r26, r10
+ 13a:	bb 2d       	mov	r27, r11
+ * @{
+ */
+__always_optimize
+static inline void __portable_avr_delay_cycles(unsigned long n)
+{
+	do { barrier(); } while (--n);
+ 13c:	01 97       	sbiw	r24, 0x01	; 1
+ 13e:	a1 09       	sbc	r26, r1
+ 140:	b1 09       	sbc	r27, r1
+ 142:	00 97       	sbiw	r24, 0x00	; 0
+ 144:	a1 05       	cpc	r26, r1
+ 146:	b1 05       	cpc	r27, r1
+ 148:	c9 f7       	brne	.-14     	; 0x13c <main+0x84>
+ 14a:	eb cf       	rjmp	.-42     	; 0x122 <main+0x6a>
+
+0000014c <Init>:
+ */
+void Init(void)
+{
+  unsigned char i, pwm;
+
+  CLKPR = (1 << CLKPCE);        // enable clock prescaler update
+ 14c:	e1 e6       	ldi	r30, 0x61	; 97
+ 14e:	f0 e0       	ldi	r31, 0x00	; 0
+ 150:	80 e8       	ldi	r24, 0x80	; 128
+ 152:	80 83       	st	Z, r24
+  CLKPR = 0;                    // set clock to maximum (= crystal)
+ 154:	10 82       	st	Z, r1
+
+  __watchdog_reset();           // reset watchdog timer
+ 156:	a8 95       	wdr
+  MCUSR &= ~(1 << WDRF);        // clear the watchdog reset flag
+ 158:	84 b7       	in	r24, 0x34	; 52
+ 15a:	87 7f       	andi	r24, 0xF7	; 247
+ 15c:	84 bf       	out	0x34, r24	; 52
+  WDTCSR |= (1<<WDCE)|(1<<WDE); // start timed sequence
+ 15e:	e0 e6       	ldi	r30, 0x60	; 96
+ 160:	f0 e0       	ldi	r31, 0x00	; 0
+ 162:	80 81       	ld	r24, Z
+ 164:	88 61       	ori	r24, 0x18	; 24
+ 166:	80 83       	st	Z, r24
+  WDTCSR = 0x00;                // disable watchdog timer
+ 168:	10 82       	st	Z, r1
+
+  DDRD = PORTD_MASK;            // set port pins to output
+ 16a:	8f ef       	ldi	r24, 0xFF	; 255
+ 16c:	8a b9       	out	0x0a, r24	; 10
+  DDRB = PORTB_MASK;            // set port pins to output
+ 16e:	8f e0       	ldi	r24, 0x0F	; 15
+ 170:	84 b9       	out	0x04, r24	; 4
+ 172:	eb e1       	ldi	r30, 0x1B	; 27
+ 174:	f1 e0       	ldi	r31, 0x01	; 1
+ 176:	9f 01       	movw	r18, r30
+ 178:	87 e2       	ldi	r24, 0x27	; 39
+ 17a:	91 e0       	ldi	r25, 0x01	; 1
+  pwm = PWMDEFAULT;
+#endif
+
+  for(i=0 ; i<CHMAX ; i++)      // initialise all channels
+  {
+    compare[i] = pwm;           // set default PWM values
+ 17c:	40 e8       	ldi	r20, 0x80	; 128
+ 17e:	df 01       	movw	r26, r30
+ 180:	a2 1b       	sub	r26, r18
+ 182:	b3 0b       	sbc	r27, r19
+ 184:	41 93       	st	Z+, r20
+    compbuff[i] = pwm;          // set default PWM values
+ 186:	a1 5f       	subi	r26, 0xF1	; 241
+ 188:	be 4f       	sbci	r27, 0xFE	; 254
+ 18a:	4c 93       	st	X, r20
+  pwm = 0;                      // worst-case default PWM level
+#else
+  pwm = PWMDEFAULT;
+#endif
+
+  for(i=0 ; i<CHMAX ; i++)      // initialise all channels
+ 18c:	e8 17       	cp	r30, r24
+ 18e:	f9 07       	cpc	r31, r25
+ 190:	b1 f7       	brne	.-20     	; 0x17e <Init+0x32>
+    compare[i] = pwm;           // set default PWM values
+    compbuff[i] = pwm;          // set default PWM values
+  }
+
+
+  TIFR0 = (1 << TOV0);           // clear interrupt flag
+ 192:	81 e0       	ldi	r24, 0x01	; 1
+ 194:	85 bb       	out	0x15, r24	; 21
+  TIMSK0 = (1 << TOIE0);         // enable overflow interrupt
+ 196:	80 93 6e 00 	sts	0x006E, r24
+  TCCR0B = (1 << CS00);         // start timer, no prescale
+ 19a:	85 bd       	out	0x25, r24	; 37
+ 19c:	08 95       	ret
+
+0000019e <__vector_16>:
+  __interrupt void ISR_TOV0 (void)
+
+#elif __GNUC__ > 0
+  ISR (TIMER0_OVF_vect)
+#endif
+{
+ 19e:	1f 92       	push	r1
+ 1a0:	0f 92       	push	r0
+ 1a2:	0f b6       	in	r0, 0x3f	; 63
+ 1a4:	0f 92       	push	r0
+ 1a6:	11 24       	eor	r1, r1
+ 1a8:	8f 93       	push	r24
+ 1aa:	9f 93       	push	r25
+  static unsigned char pinlevelB=PORTB_MASK, pinlevelD=PORTD_MASK;
+  static unsigned char softcount=0xFF;
+
+  if(++softcount == 0){         // increment modulo 256 counter and update
+ 1ac:	80 91 02 01 	lds	r24, 0x0102
+ 1b0:	8f 5f       	subi	r24, 0xFF	; 255
+ 1b2:	80 93 02 01 	sts	0x0102, r24
+ 1b6:	81 11       	cpse	r24, r1
+ 1b8:	36 c0       	rjmp	.+108    	; 0x226 <__vector_16+0x88>
+                                // the compare values only when counter = 0.
+    compare[0] = compbuff[0];   // verbose code for speed
+ 1ba:	90 91 0f 01 	lds	r25, 0x010F
+ 1be:	90 93 1b 01 	sts	0x011B, r25
+    compare[1] = compbuff[1];
+ 1c2:	90 91 10 01 	lds	r25, 0x0110
+ 1c6:	90 93 1c 01 	sts	0x011C, r25
+    compare[2] = compbuff[2];
+ 1ca:	90 91 11 01 	lds	r25, 0x0111
+ 1ce:	90 93 1d 01 	sts	0x011D, r25
+    compare[3] = compbuff[3];
+ 1d2:	90 91 12 01 	lds	r25, 0x0112
+ 1d6:	90 93 1e 01 	sts	0x011E, r25
+    compare[4] = compbuff[4];
+ 1da:	90 91 13 01 	lds	r25, 0x0113
+ 1de:	90 93 1f 01 	sts	0x011F, r25
+    compare[5] = compbuff[5];
+ 1e2:	90 91 14 01 	lds	r25, 0x0114
+ 1e6:	90 93 20 01 	sts	0x0120, r25
+    compare[6] = compbuff[6];
+ 1ea:	90 91 15 01 	lds	r25, 0x0115
+ 1ee:	90 93 21 01 	sts	0x0121, r25
+    compare[7] = compbuff[7];
+ 1f2:	90 91 16 01 	lds	r25, 0x0116
+ 1f6:	90 93 22 01 	sts	0x0122, r25
+    compare[8] = compbuff[8];
+ 1fa:	90 91 17 01 	lds	r25, 0x0117
+ 1fe:	90 93 23 01 	sts	0x0123, r25
+    compare[9] = compbuff[9];
+ 202:	90 91 18 01 	lds	r25, 0x0118
+ 206:	90 93 24 01 	sts	0x0124, r25
+	compare[10] = compbuff[10];
+ 20a:	90 91 19 01 	lds	r25, 0x0119
+ 20e:	90 93 25 01 	sts	0x0125, r25
+	compare[11] = compbuff[11];  // last element should equal CHMAX - 1
+ 212:	90 91 1a 01 	lds	r25, 0x011A
+ 216:	90 93 26 01 	sts	0x0126, r25
+
+    pinlevelB = PORTB_MASK;     // set all port pins high
+ 21a:	9f e0       	ldi	r25, 0x0F	; 15
+ 21c:	90 93 01 01 	sts	0x0101, r25
+    pinlevelD = PORTD_MASK;     // set all port pins high
+ 220:	9f ef       	ldi	r25, 0xFF	; 255
+ 222:	90 93 00 01 	sts	0x0100, r25
+  }
+  // clear port pin on compare match (executed on next interrupt)
+  if(compare[0] == softcount) CH0_CLEAR;
+ 226:	90 91 1b 01 	lds	r25, 0x011B
+ 22a:	89 13       	cpse	r24, r25
+ 22c:	05 c0       	rjmp	.+10     	; 0x238 <__vector_16+0x9a>
+ 22e:	90 91 00 01 	lds	r25, 0x0100
+ 232:	9e 7f       	andi	r25, 0xFE	; 254
+ 234:	90 93 00 01 	sts	0x0100, r25
+  if(compare[1] == softcount) CH1_CLEAR;
+ 238:	90 91 1c 01 	lds	r25, 0x011C
+ 23c:	89 13       	cpse	r24, r25
+ 23e:	05 c0       	rjmp	.+10     	; 0x24a <__vector_16+0xac>
+ 240:	90 91 00 01 	lds	r25, 0x0100
+ 244:	9d 7f       	andi	r25, 0xFD	; 253
+ 246:	90 93 00 01 	sts	0x0100, r25
+  if(compare[2] == softcount) CH2_CLEAR;
+ 24a:	90 91 1d 01 	lds	r25, 0x011D
+ 24e:	89 13       	cpse	r24, r25
+ 250:	05 c0       	rjmp	.+10     	; 0x25c <__vector_16+0xbe>
+ 252:	90 91 00 01 	lds	r25, 0x0100
+ 256:	9b 7f       	andi	r25, 0xFB	; 251
+ 258:	90 93 00 01 	sts	0x0100, r25
+  if(compare[3] == softcount) CH3_CLEAR;
+ 25c:	90 91 1e 01 	lds	r25, 0x011E
+ 260:	89 13       	cpse	r24, r25
+ 262:	05 c0       	rjmp	.+10     	; 0x26e <__vector_16+0xd0>
+ 264:	90 91 00 01 	lds	r25, 0x0100
+ 268:	97 7f       	andi	r25, 0xF7	; 247
+ 26a:	90 93 00 01 	sts	0x0100, r25
+  if(compare[4] == softcount) CH4_CLEAR;
+ 26e:	90 91 1f 01 	lds	r25, 0x011F
+ 272:	89 13       	cpse	r24, r25
+ 274:	05 c0       	rjmp	.+10     	; 0x280 <__vector_16+0xe2>
+ 276:	90 91 00 01 	lds	r25, 0x0100
+ 27a:	9f 7e       	andi	r25, 0xEF	; 239
+ 27c:	90 93 00 01 	sts	0x0100, r25
+
+  if(compare[5] == softcount) CH5_CLEAR;
+ 280:	90 91 20 01 	lds	r25, 0x0120
+ 284:	89 13       	cpse	r24, r25
+ 286:	05 c0       	rjmp	.+10     	; 0x292 <__vector_16+0xf4>
+ 288:	90 91 00 01 	lds	r25, 0x0100
+ 28c:	9f 7d       	andi	r25, 0xDF	; 223
+ 28e:	90 93 00 01 	sts	0x0100, r25
+  if(compare[6] == softcount) CH6_CLEAR;
+ 292:	90 91 21 01 	lds	r25, 0x0121
+ 296:	89 13       	cpse	r24, r25
+ 298:	05 c0       	rjmp	.+10     	; 0x2a4 <__vector_16+0x106>
+ 29a:	90 91 00 01 	lds	r25, 0x0100
+ 29e:	9f 7b       	andi	r25, 0xBF	; 191
+ 2a0:	90 93 00 01 	sts	0x0100, r25
+  if(compare[7] == softcount) CH7_CLEAR;
+ 2a4:	90 91 22 01 	lds	r25, 0x0122
+ 2a8:	89 13       	cpse	r24, r25
+ 2aa:	05 c0       	rjmp	.+10     	; 0x2b6 <__vector_16+0x118>
+ 2ac:	90 91 00 01 	lds	r25, 0x0100
+ 2b0:	9f 77       	andi	r25, 0x7F	; 127
+ 2b2:	90 93 00 01 	sts	0x0100, r25
+  if(compare[8] == softcount) CH8_CLEAR;
+ 2b6:	90 91 23 01 	lds	r25, 0x0123
+ 2ba:	89 13       	cpse	r24, r25
+ 2bc:	05 c0       	rjmp	.+10     	; 0x2c8 <__vector_16+0x12a>
+ 2be:	90 91 01 01 	lds	r25, 0x0101
+ 2c2:	9e 7f       	andi	r25, 0xFE	; 254
+ 2c4:	90 93 01 01 	sts	0x0101, r25
+  if(compare[9] == softcount) CH9_CLEAR;
+ 2c8:	90 91 24 01 	lds	r25, 0x0124
+ 2cc:	89 13       	cpse	r24, r25
+ 2ce:	05 c0       	rjmp	.+10     	; 0x2da <__vector_16+0x13c>
+ 2d0:	90 91 01 01 	lds	r25, 0x0101
+ 2d4:	9d 7f       	andi	r25, 0xFD	; 253
+ 2d6:	90 93 01 01 	sts	0x0101, r25
+  if(compare[10] == softcount) CH10_CLEAR;
+ 2da:	90 91 25 01 	lds	r25, 0x0125
+ 2de:	89 13       	cpse	r24, r25
+ 2e0:	05 c0       	rjmp	.+10     	; 0x2ec <__vector_16+0x14e>
+ 2e2:	90 91 01 01 	lds	r25, 0x0101
+ 2e6:	9b 7f       	andi	r25, 0xFB	; 251
+ 2e8:	90 93 01 01 	sts	0x0101, r25
+  if(compare[11] == softcount) CH11_CLEAR;
+ 2ec:	90 91 26 01 	lds	r25, 0x0126
+ 2f0:	89 13       	cpse	r24, r25
+ 2f2:	05 c0       	rjmp	.+10     	; 0x2fe <__vector_16+0x160>
+ 2f4:	80 91 01 01 	lds	r24, 0x0101
+ 2f8:	87 7f       	andi	r24, 0xF7	; 247
+ 2fa:	80 93 01 01 	sts	0x0101, r24
+  
+  PORTB = pinlevelB;            // update outputs
+ 2fe:	80 91 01 01 	lds	r24, 0x0101
+ 302:	85 b9       	out	0x05, r24	; 5
+  PORTD = pinlevelD;            // update outputs
+ 304:	80 91 00 01 	lds	r24, 0x0100
+ 308:	8b b9       	out	0x0b, r24	; 11
+#if DEBUG
+  DEBUGPIN_OFF;                 // clear debug pin
+  TCCR1B = 0;                   // stop timer
+  if(!softcount) debygTimer = TCNT1;  // store value for softcount=0 ISR
+#endif
+}
+ 30a:	9f 91       	pop	r25
+ 30c:	8f 91       	pop	r24
+ 30e:	0f 90       	pop	r0
+ 310:	0f be       	out	0x3f, r0	; 63
+ 312:	0f 90       	pop	r0
+ 314:	1f 90       	pop	r1
+ 316:	18 95       	reti
+
+00000318 <digitalWrite>:
+//                                                                                                            //|
+//============================================================================================================//|
+
+
+void digitalWrite(uint8_t pinNumber, bool isHigh){
+	if(isHigh) PORTC |= (1 << pinNumber);
+ 318:	66 23       	and	r22, r22
+ 31a:	69 f0       	breq	.+26     	; 0x336 <digitalWrite+0x1e>
+ 31c:	48 b1       	in	r20, 0x08	; 8
+ 31e:	21 e0       	ldi	r18, 0x01	; 1
+ 320:	30 e0       	ldi	r19, 0x00	; 0
+ 322:	b9 01       	movw	r22, r18
+ 324:	02 c0       	rjmp	.+4      	; 0x32a <digitalWrite+0x12>
+ 326:	66 0f       	add	r22, r22
+ 328:	77 1f       	adc	r23, r23
+ 32a:	8a 95       	dec	r24
+ 32c:	e2 f7       	brpl	.-8      	; 0x326 <digitalWrite+0xe>
+ 32e:	cb 01       	movw	r24, r22
+ 330:	84 2b       	or	r24, r20
+ 332:	88 b9       	out	0x08, r24	; 8
+ 334:	08 95       	ret
+	else PORTC &= ~(1 << pinNumber);
+ 336:	48 b1       	in	r20, 0x08	; 8
+ 338:	21 e0       	ldi	r18, 0x01	; 1
+ 33a:	30 e0       	ldi	r19, 0x00	; 0
+ 33c:	b9 01       	movw	r22, r18
+ 33e:	02 c0       	rjmp	.+4      	; 0x344 <digitalWrite+0x2c>
+ 340:	66 0f       	add	r22, r22
+ 342:	77 1f       	adc	r23, r23
+ 344:	8a 95       	dec	r24
+ 346:	e2 f7       	brpl	.-8      	; 0x340 <digitalWrite+0x28>
+ 348:	cb 01       	movw	r24, r22
+ 34a:	80 95       	com	r24
+ 34c:	84 23       	and	r24, r20
+ 34e:	88 b9       	out	0x08, r24	; 8
+ 350:	08 95       	ret
+
+00000352 <DS1302_stop>:
+//  A helper function to finish the communication.                                                       //|    |
+//                                                                                                       //|    |
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//|    |
+void DS1302_stop( void )  {                                                             //|    |
+  // Set CE low                                                                                          //|    |
+  digitalWrite( DS1302_CE_PIN, LOW );                                                                    //|    |
+ 352:	60 e0       	ldi	r22, 0x00	; 0
+ 354:	80 91 0b 01 	lds	r24, 0x010B
+ 358:	0e 94 8c 01 	call	0x318	; 0x318 <digitalWrite>
+ 35c:	08 95       	ret
+
+0000035e <digitalRead>:
+	if(isHigh) PORTC |= (1 << pinNumber);
+	else PORTC &= ~(1 << pinNumber);
+}
+
+bool digitalRead(uint8_t pinNumber){
+	if(PINC & (1 << pinNumber)) return 1;
+ 35e:	26 b1       	in	r18, 0x06	; 6
+ 360:	30 e0       	ldi	r19, 0x00	; 0
+ 362:	a9 01       	movw	r20, r18
+ 364:	02 c0       	rjmp	.+4      	; 0x36a <digitalRead+0xc>
+ 366:	55 95       	asr	r21
+ 368:	47 95       	ror	r20
+ 36a:	8a 95       	dec	r24
+ 36c:	e2 f7       	brpl	.-8      	; 0x366 <digitalRead+0x8>
+ 36e:	ca 01       	movw	r24, r20
+	return 0;
+}
+ 370:	81 70       	andi	r24, 0x01	; 1
+ 372:	08 95       	ret
+
+00000374 <DS1302_toggleread>:
+//                                                                                                       //|    |
+//  A helper function for reading a byte with bit toggle.  This function assumes that the SCLK is still  //|    |
+//  high.                                                                                                //|    |
+//                                                                                                       //|    |
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//|    |
+uint8_t DS1302_toggleread( void )  {                                                    //|    |
+ 374:	cf 93       	push	r28
+ 376:	df 93       	push	r29
+ 378:	d8 e0       	ldi	r29, 0x08	; 8
+  uint8_t i, data;                                                                                       //|    |
+  data = 0;                                                                                              //|    |
+ 37a:	c0 e0       	ldi	r28, 0x00	; 0
+                                                                                                         //|    |
+// Issue a clock pulse for the next databit.  If the 'togglewrite' function was used before this         //|    |
+//  function, the SCLK is already high.                                                                  //|    |
+  for( i = 0; i <= 7; i++ )  {                                                                           //|    |
+    digitalWrite( DS1302_SCLK_PIN, HIGH );                                                               //|    |
+ 37c:	61 e0       	ldi	r22, 0x01	; 1
+ 37e:	80 91 06 01 	lds	r24, 0x0106
+ 382:	0e 94 8c 01 	call	0x318	; 0x318 <digitalWrite>
+    delay_us( 1) ;                                                                              //|    |
+                                                                                                         //|    |
+    // Clock down, data is ready after some time.                                                        //|    |
+    digitalWrite( DS1302_SCLK_PIN, LOW );                                                                //|    |
+ 386:	60 e0       	ldi	r22, 0x00	; 0
+ 388:	80 91 06 01 	lds	r24, 0x0106
+ 38c:	0e 94 8c 01 	call	0x318	; 0x318 <digitalWrite>
+    delay_us( 1 );                                  // tCL=1000ns, tCDD=800ns 
+		if(digitalRead(IO)) data |= 0x80;
+ 390:	80 91 04 01 	lds	r24, 0x0104
+ 394:	0e 94 af 01 	call	0x35e	; 0x35e <digitalRead>
+ 398:	81 11       	cpse	r24, r1
+ 39a:	c0 68       	ori	r28, 0x80	; 128
+		data >>=1;                                                                                       //|    |
+ 39c:	c6 95       	lsr	r28
+ 39e:	d1 50       	subi	r29, 0x01	; 1
+  uint8_t i, data;                                                                                       //|    |
+  data = 0;                                                                                              //|    |
+                                                                                                         //|    |
+// Issue a clock pulse for the next databit.  If the 'togglewrite' function was used before this         //|    |
+//  function, the SCLK is already high.                                                                  //|    |
+  for( i = 0; i <= 7; i++ )  {                                                                           //|    |
+ 3a0:	69 f7       	brne	.-38     	; 0x37c <DS1302_toggleread+0x8>
+    delay_us( 1 );                                  // tCL=1000ns, tCDD=800ns 
+		if(digitalRead(IO)) data |= 0x80;
+		data >>=1;                                                                                       //|    |
+	}                                                                                                    //|    |
+  return( data );                                                                                        //|    |
+}                                                //|    |
+ 3a2:	8c 2f       	mov	r24, r28
+ 3a4:	df 91       	pop	r29
+ 3a6:	cf 91       	pop	r28
+ 3a8:	08 95       	ret
+
+000003aa <pinMode>:
+	if(PINC & (1 << pinNumber)) return 1;
+	return 0;
+}
+
+void pinMode(uint8_t pinNumber, bool isHigh){
+	if(isHigh) DDRC |= (1 << pinNumber);
+ 3aa:	66 23       	and	r22, r22
+ 3ac:	69 f0       	breq	.+26     	; 0x3c8 <pinMode+0x1e>
+ 3ae:	47 b1       	in	r20, 0x07	; 7
+ 3b0:	21 e0       	ldi	r18, 0x01	; 1
+ 3b2:	30 e0       	ldi	r19, 0x00	; 0
+ 3b4:	b9 01       	movw	r22, r18
+ 3b6:	02 c0       	rjmp	.+4      	; 0x3bc <pinMode+0x12>
+ 3b8:	66 0f       	add	r22, r22
+ 3ba:	77 1f       	adc	r23, r23
+ 3bc:	8a 95       	dec	r24
+ 3be:	e2 f7       	brpl	.-8      	; 0x3b8 <pinMode+0xe>
+ 3c0:	cb 01       	movw	r24, r22
+ 3c2:	84 2b       	or	r24, r20
+ 3c4:	87 b9       	out	0x07, r24	; 7
+ 3c6:	08 95       	ret
+	else DDRC &= ~(1 << pinNumber);
+ 3c8:	47 b1       	in	r20, 0x07	; 7
+ 3ca:	21 e0       	ldi	r18, 0x01	; 1
+ 3cc:	30 e0       	ldi	r19, 0x00	; 0
+ 3ce:	b9 01       	movw	r22, r18
+ 3d0:	02 c0       	rjmp	.+4      	; 0x3d6 <pinMode+0x2c>
+ 3d2:	66 0f       	add	r22, r22
+ 3d4:	77 1f       	adc	r23, r23
+ 3d6:	8a 95       	dec	r24
+ 3d8:	e2 f7       	brpl	.-8      	; 0x3d2 <pinMode+0x28>
+ 3da:	cb 01       	movw	r24, r22
+ 3dc:	80 95       	com	r24
+ 3de:	84 23       	and	r24, r20
+ 3e0:	87 b9       	out	0x07, r24	; 7
+ 3e2:	08 95       	ret
+
+000003e4 <DS1302_start>:
+//  Arduino are high impedance.  Since the DS1302 has pull-down resistors, the signals are low           //|    |
+//  (inactive) until the DS1302 is used.                                                                 //|    |
+//                                                                                                       //|    |
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//|    |
+void DS1302_start( void )  {                                                            //|    |
+  digitalWrite( DS1302_CE_PIN, LOW );                 // default, not enabled                            //|    |
+ 3e4:	60 e0       	ldi	r22, 0x00	; 0
+ 3e6:	80 91 0b 01 	lds	r24, 0x010B
+ 3ea:	0e 94 8c 01 	call	0x318	; 0x318 <digitalWrite>
+  pinMode( DS1302_CE_PIN, OUTPUT );                                                                      //|    |
+ 3ee:	61 e0       	ldi	r22, 0x01	; 1
+ 3f0:	80 91 0b 01 	lds	r24, 0x010B
+ 3f4:	0e 94 d5 01 	call	0x3aa	; 0x3aa <pinMode>
+                                                                                                         //|    |
+  digitalWrite( DS1302_SCLK_PIN, LOW );               // default, clock low                              //|    |
+ 3f8:	60 e0       	ldi	r22, 0x00	; 0
+ 3fa:	80 91 06 01 	lds	r24, 0x0106
+ 3fe:	0e 94 8c 01 	call	0x318	; 0x318 <digitalWrite>
+  pinMode( DS1302_SCLK_PIN, OUTPUT );                                                                    //|    |
+ 402:	61 e0       	ldi	r22, 0x01	; 1
+ 404:	80 91 06 01 	lds	r24, 0x0106
+ 408:	0e 94 d5 01 	call	0x3aa	; 0x3aa <pinMode>
+                                                                                                         //|    |
+  pinMode( DS1302_IO_PIN, OUTPUT );                                                                      //|    |
+ 40c:	61 e0       	ldi	r22, 0x01	; 1
+ 40e:	80 91 04 01 	lds	r24, 0x0104
+ 412:	0e 94 d5 01 	call	0x3aa	; 0x3aa <pinMode>
+                                                                                                         //|    |
+  digitalWrite( DS1302_CE_PIN, HIGH );                // start the session                               //|    |
+ 416:	61 e0       	ldi	r22, 0x01	; 1
+ 418:	80 91 0b 01 	lds	r24, 0x010B
+ 41c:	0e 94 8c 01 	call	0x318	; 0x318 <digitalWrite>
+ 420:	08 95       	ret
+
+00000422 <DS1302_togglewrite>:
+//                                                                                                       //|    |
+//  A helper function for writing a byte with bit toggle.  The 'release' parameter is for a read after   //|    |
+//  this write.  It will release the I/O-line and will keep the SCLK high.                               //|    |
+//                                                                                                       //|    |
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//|    |
+void DS1302_togglewrite( uint8_t data, uint8_t release)  {                              //|    |
+ 422:	0f 93       	push	r16
+ 424:	1f 93       	push	r17
+ 426:	cf 93       	push	r28
+ 428:	df 93       	push	r29
+ 42a:	18 2f       	mov	r17, r24
+ 42c:	06 2f       	mov	r16, r22
+  int i;                                                                                                 //|    |
+                                                                                                         //|    |
+  for( i = 0; i <= 7; i++ )  {                                                                           //|    |
+ 42e:	c0 e0       	ldi	r28, 0x00	; 0
+ 430:	d0 e0       	ldi	r29, 0x00	; 0
+    // set a bit of the data on the I/O-line                                                             //|    |
+    digitalWrite( DS1302_IO_PIN, (data & 1) );  
+ 432:	61 2f       	mov	r22, r17
+ 434:	61 70       	andi	r22, 0x01	; 1
+ 436:	80 91 04 01 	lds	r24, 0x0104
+ 43a:	0e 94 8c 01 	call	0x318	; 0x318 <digitalWrite>
+	data >>= 1;                                                   //|    |
+ 43e:	16 95       	lsr	r17
+    delay_us( 1 );                                     // tDC = 200ns                           //|    |
+                                                                                                         //|    |
+    // clock up, data is read by DS1302                                                                  //|    |
+    digitalWrite( DS1302_SCLK_PIN, HIGH );                                                               //|    |
+ 440:	61 e0       	ldi	r22, 0x01	; 1
+ 442:	80 91 06 01 	lds	r24, 0x0106
+ 446:	0e 94 8c 01 	call	0x318	; 0x318 <digitalWrite>
+    delay_us( 1 );                                     // tCH = 1000ns, tCDH = 800ns            //|    |
+                                                                                                         //|    |
+//  If this write is followed by a read, the I/O-line should be released after the last bit, before the  //|    |
+//  clock line is made low.  This is according the datasheet.  I have seen other programs that don't     //|    |
+//  release the I/O-line at this moment, and that could cause a shortcut spike on the I/O-line.          //|    |
+    if( release && i == 7 )  {                                                                           //|    |
+ 44a:	00 23       	and	r16, r16
+ 44c:	49 f0       	breq	.+18     	; 0x460 <DS1302_togglewrite+0x3e>
+ 44e:	c7 30       	cpi	r28, 0x07	; 7
+ 450:	d1 05       	cpc	r29, r1
+ 452:	31 f4       	brne	.+12     	; 0x460 <DS1302_togglewrite+0x3e>
+      pinMode( DS1302_IO_PIN, INPUT );                                                                   //|    |
+ 454:	60 e0       	ldi	r22, 0x00	; 0
+ 456:	80 91 04 01 	lds	r24, 0x0104
+ 45a:	0e 94 d5 01 	call	0x3aa	; 0x3aa <pinMode>
+ 45e:	09 c0       	rjmp	.+18     	; 0x472 <DS1302_togglewrite+0x50>
+    }  else  {                                                                                           //|    |
+      digitalWrite( DS1302_SCLK_PIN, LOW );                                                              //|    |
+ 460:	60 e0       	ldi	r22, 0x00	; 0
+ 462:	80 91 06 01 	lds	r24, 0x0106
+ 466:	0e 94 8c 01 	call	0x318	; 0x318 <digitalWrite>
+//                                                                                                       //|    |
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//|    |
+void DS1302_togglewrite( uint8_t data, uint8_t release)  {                              //|    |
+  int i;                                                                                                 //|    |
+                                                                                                         //|    |
+  for( i = 0; i <= 7; i++ )  {                                                                           //|    |
+ 46a:	21 96       	adiw	r28, 0x01	; 1
+ 46c:	c8 30       	cpi	r28, 0x08	; 8
+ 46e:	d1 05       	cpc	r29, r1
+ 470:	01 f7       	brne	.-64     	; 0x432 <DS1302_togglewrite+0x10>
+    }  else  {                                                                                           //|    |
+      digitalWrite( DS1302_SCLK_PIN, LOW );                                                              //|    |
+      delay_us( 1 );                                   // tCL=1000ns, tCDD=800ns                //|    |
+    }                                                                                                    //|    |
+  }                                                                                                      //|    |
+}                          //|    |
+ 472:	df 91       	pop	r29
+ 474:	cf 91       	pop	r28
+ 476:	1f 91       	pop	r17
+ 478:	0f 91       	pop	r16
+ 47a:	08 95       	ret
+
+0000047c <DS1302_clock_burst_read>:
+//                                                                                                       //|    |
+//  This function reads 8 bytes clock data in burst mode from the DS1302.  This function may be called   //|    |
+//  as the first function, also the pinMode is set.                                                      //|    |
+//                                                                                                       //|    |
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//|    |
+void DS1302_clock_burst_read( uint8_t *p)  {                                             //|    |
+ 47c:	0f 93       	push	r16
+ 47e:	1f 93       	push	r17
+ 480:	cf 93       	push	r28
+ 482:	df 93       	push	r29
+ 484:	8c 01       	movw	r16, r24
+  int i;                                                                                                 //|    |
+  DS1302_start();                                                                                       //|    |
+ 486:	0e 94 f2 01 	call	0x3e4	; 0x3e4 <DS1302_start>
+                                                                                                         //|    |
+// Instead of the address, the CLOCK_BURST_READ command is issued the I/O-line is released for the data  //|    |
+  DS1302_togglewrite( DS1302_CLOCK_BURST_READ, true);                                                   //|    |
+ 48a:	61 e0       	ldi	r22, 0x01	; 1
+ 48c:	8f eb       	ldi	r24, 0xBF	; 191
+ 48e:	0e 94 11 02 	call	0x422	; 0x422 <DS1302_togglewrite>
+ 492:	e8 01       	movw	r28, r16
+ 494:	08 5f       	subi	r16, 0xF8	; 248
+ 496:	1f 4f       	sbci	r17, 0xFF	; 255
+                                                                                                         //|    |
+  for( i=0; i<=7; i++)  {//increment through the struct reading and filling it up                       //|    |
+    *p++ = DS1302_toggleread();                                                                         //|    |
+ 498:	0e 94 ba 01 	call	0x374	; 0x374 <DS1302_toggleread>
+ 49c:	89 93       	st	Y+, r24
+  DS1302_start();                                                                                       //|    |
+                                                                                                         //|    |
+// Instead of the address, the CLOCK_BURST_READ command is issued the I/O-line is released for the data  //|    |
+  DS1302_togglewrite( DS1302_CLOCK_BURST_READ, true);                                                   //|    |
+                                                                                                         //|    |
+  for( i=0; i<=7; i++)  {//increment through the struct reading and filling it up                       //|    |
+ 49e:	c0 17       	cp	r28, r16
+ 4a0:	d1 07       	cpc	r29, r17
+ 4a2:	d1 f7       	brne	.-12     	; 0x498 <DS1302_clock_burst_read+0x1c>
+    *p++ = DS1302_toggleread();                                                                         //|    |
+  }                                                                                                      //|    |
+  DS1302_stop();                                                                                        //|    |
+ 4a4:	0e 94 a9 01 	call	0x352	; 0x352 <DS1302_stop>
+}                                         //|    |
+ 4a8:	df 91       	pop	r29
+ 4aa:	cf 91       	pop	r28
+ 4ac:	1f 91       	pop	r17
+ 4ae:	0f 91       	pop	r16
+ 4b0:	08 95       	ret
+
+000004b2 <updateTime>:
+//  time to the current data.                                                                            //|    |
+//                                                                                                       //|    |
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//|    |
+void updateTime() {                                                                      //|    |
+                                                                                                         //|    |
+  DS1302_clock_burst_read( (uint8_t *) &rtc);               // Read all clock data at once (burst mode). //|    |
+ 4b2:	87 e2       	ldi	r24, 0x27	; 39
+ 4b4:	91 e0       	ldi	r25, 0x01	; 1
+ 4b6:	0e 94 3e 02 	call	0x47c	; 0x47c <DS1302_clock_burst_read>
+                                                                                                         //|    |
+  seconds     = ( rtc.Seconds10  * 10 ) + rtc. Seconds;                                                  //|    |
+ 4ba:	80 91 27 01 	lds	r24, 0x0127
+ 4be:	98 2f       	mov	r25, r24
+ 4c0:	96 95       	lsr	r25
+ 4c2:	96 95       	lsr	r25
+ 4c4:	96 95       	lsr	r25
+ 4c6:	9e 70       	andi	r25, 0x0E	; 14
+ 4c8:	29 2f       	mov	r18, r25
+ 4ca:	22 0f       	add	r18, r18
+ 4cc:	22 0f       	add	r18, r18
+ 4ce:	92 0f       	add	r25, r18
+ 4d0:	8f 70       	andi	r24, 0x0F	; 15
+ 4d2:	98 0f       	add	r25, r24
+ 4d4:	90 93 08 01 	sts	0x0108, r25
+  minutes     = ( rtc. Minutes10 * 10 ) + rtc.Minutes;                                                   //|    |
+ 4d8:	80 91 28 01 	lds	r24, 0x0128
+ 4dc:	98 2f       	mov	r25, r24
+ 4de:	96 95       	lsr	r25
+ 4e0:	96 95       	lsr	r25
+ 4e2:	96 95       	lsr	r25
+ 4e4:	9e 70       	andi	r25, 0x0E	; 14
+ 4e6:	29 2f       	mov	r18, r25
+ 4e8:	22 0f       	add	r18, r18
+ 4ea:	22 0f       	add	r18, r18
+ 4ec:	92 0f       	add	r25, r18
+ 4ee:	8f 70       	andi	r24, 0x0F	; 15
+ 4f0:	98 0f       	add	r25, r24
+ 4f2:	90 93 0d 01 	sts	0x010D, r25
+  hours       = ( rtc.h24.Hour10 * 10 ) + rtc.h24.Hour;                                                  //|    |
+ 4f6:	80 91 29 01 	lds	r24, 0x0129
+ 4fa:	98 2f       	mov	r25, r24
+ 4fc:	96 95       	lsr	r25
+ 4fe:	96 95       	lsr	r25
+ 500:	96 95       	lsr	r25
+ 502:	96 70       	andi	r25, 0x06	; 6
+ 504:	29 2f       	mov	r18, r25
+ 506:	22 0f       	add	r18, r18
+ 508:	22 0f       	add	r18, r18
+ 50a:	92 0f       	add	r25, r18
+ 50c:	8f 70       	andi	r24, 0x0F	; 15
+ 50e:	98 0f       	add	r25, r24
+ 510:	90 93 0e 01 	sts	0x010E, r25
+  dayofweek   = ( rtc.Day );                                                                             //|    |
+ 514:	80 91 2c 01 	lds	r24, 0x012C
+ 518:	87 70       	andi	r24, 0x07	; 7
+ 51a:	80 93 0c 01 	sts	0x010C, r24
+  dayofmonth  = ( rtc.Date10  * 10 ) + rtc.Date;                                                         //|    |
+ 51e:	80 91 2a 01 	lds	r24, 0x012A
+ 522:	98 2f       	mov	r25, r24
+ 524:	96 95       	lsr	r25
+ 526:	96 95       	lsr	r25
+ 528:	96 95       	lsr	r25
+ 52a:	96 70       	andi	r25, 0x06	; 6
+ 52c:	29 2f       	mov	r18, r25
+ 52e:	22 0f       	add	r18, r18
+ 530:	22 0f       	add	r18, r18
+ 532:	92 0f       	add	r25, r18
+ 534:	8f 70       	andi	r24, 0x0F	; 15
+ 536:	98 0f       	add	r25, r24
+ 538:	90 93 07 01 	sts	0x0107, r25
+  month       = ( rtc.Month10 * 10 ) + rtc.Month;                                                        //|    |
+ 53c:	80 91 2b 01 	lds	r24, 0x012B
+ 540:	84 fb       	bst	r24, 4
+ 542:	99 27       	eor	r25, r25
+ 544:	90 f9       	bld	r25, 0
+ 546:	99 0f       	add	r25, r25
+ 548:	29 2f       	mov	r18, r25
+ 54a:	22 0f       	add	r18, r18
+ 54c:	22 0f       	add	r18, r18
+ 54e:	92 0f       	add	r25, r18
+ 550:	8f 70       	andi	r24, 0x0F	; 15
+ 552:	98 0f       	add	r25, r24
+ 554:	90 93 05 01 	sts	0x0105, r25
+  year        = ( rtc.Year10  * 10 ) + rtc.Year + 2000;                                                  //|    |
+ 558:	40 91 2d 01 	lds	r20, 0x012D
+ 55c:	84 2f       	mov	r24, r20
+ 55e:	82 95       	swap	r24
+ 560:	8f 70       	andi	r24, 0x0F	; 15
+ 562:	90 e0       	ldi	r25, 0x00	; 0
+ 564:	9c 01       	movw	r18, r24
+ 566:	22 0f       	add	r18, r18
+ 568:	33 1f       	adc	r19, r19
+ 56a:	88 0f       	add	r24, r24
+ 56c:	99 1f       	adc	r25, r25
+ 56e:	88 0f       	add	r24, r24
+ 570:	99 1f       	adc	r25, r25
+ 572:	88 0f       	add	r24, r24
+ 574:	99 1f       	adc	r25, r25
+ 576:	82 0f       	add	r24, r18
+ 578:	93 1f       	adc	r25, r19
+ 57a:	4f 70       	andi	r20, 0x0F	; 15
+ 57c:	84 0f       	add	r24, r20
+ 57e:	91 1d       	adc	r25, r1
+ 580:	80 53       	subi	r24, 0x30	; 48
+ 582:	98 4f       	sbci	r25, 0xF8	; 248
+ 584:	90 93 0a 01 	sts	0x010A, r25
+ 588:	80 93 09 01 	sts	0x0109, r24
+ 58c:	08 95       	ret
+
+0000058e <DS1302_write>:
+//  This function writes a byte to the DS1302 (clock or ram).  The address could be like "0x80" or       //|    |
+//  "0x81", the lowest bit is cleared anyway.  This function may be called as the first function,        //|    |
+//  also the pinMode is set.                                                                             //|    |
+//                                                                                                       //|    |
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//|    |
+void DS1302_write( int address, uint8_t data)  {                                         //|    |
+ 58e:	cf 93       	push	r28
+ 590:	df 93       	push	r29
+ 592:	d8 2f       	mov	r29, r24
+ 594:	c6 2f       	mov	r28, r22
+  // clear lowest bit (read bit) in address                                                              //|    |
+  address &=~1;                                                                                                       //|    |
+  DS1302_start();                                                                                       //|    |
+ 596:	0e 94 f2 01 	call	0x3e4	; 0x3e4 <DS1302_start>
+                                                                                                         //|    |
+  // don't release the I/O-line                                                                          //|    |
+  DS1302_togglewrite( address, false);                                                                  //|    |
+ 59a:	60 e0       	ldi	r22, 0x00	; 0
+ 59c:	8d 2f       	mov	r24, r29
+ 59e:	8e 7f       	andi	r24, 0xFE	; 254
+ 5a0:	0e 94 11 02 	call	0x422	; 0x422 <DS1302_togglewrite>
+                                                                                                         //|    |
+  // don't release the I/O-line                                                                          //|    |
+  DS1302_togglewrite( data, false);                                                                     //|    |
+ 5a4:	60 e0       	ldi	r22, 0x00	; 0
+ 5a6:	8c 2f       	mov	r24, r28
+ 5a8:	0e 94 11 02 	call	0x422	; 0x422 <DS1302_togglewrite>
+  DS1302_stop();                                                                                        //|    |
+ 5ac:	0e 94 a9 01 	call	0x352	; 0x352 <DS1302_stop>
+}                                     //|    |
+ 5b0:	df 91       	pop	r29
+ 5b2:	cf 91       	pop	r28
+ 5b4:	08 95       	ret
+
+000005b6 <Init_RTC>:
+//  This is the CONSTRUCTOR of the class.  It sets the pins assignments for the component, as well as    //|    |
+//  the Clock Enable and the trickle charge disablement.                                                 //|    |
+//                                                                                                       //|    |
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//|    |
+void Init_RTC()   {																						         //|    |
+  SCLK = 3;																						         //|    |
+ 5b6:	83 e0       	ldi	r24, 0x03	; 3
+ 5b8:	80 93 06 01 	sts	0x0106, r24
+  IO = 4;																							     //|    |
+ 5bc:	84 e0       	ldi	r24, 0x04	; 4
+ 5be:	80 93 04 01 	sts	0x0104, r24
+  C_E = 5;																								 //|    |
+ 5c2:	85 e0       	ldi	r24, 0x05	; 5
+ 5c4:	80 93 0b 01 	sts	0x010B, r24
+  DS1302_write (DS1302_ENABLE, 0);                         // Sets the Clock Enable to ON.               //|    |
+ 5c8:	60 e0       	ldi	r22, 0x00	; 0
+ 5ca:	8e e8       	ldi	r24, 0x8E	; 142
+ 5cc:	90 e0       	ldi	r25, 0x00	; 0
+ 5ce:	0e 94 c7 02 	call	0x58e	; 0x58e <DS1302_write>
+  DS1302_write (DS1302_TRICKLE, 0x00);                     // Disable Trickle Charger.                   //|    |
+ 5d2:	60 e0       	ldi	r22, 0x00	; 0
+ 5d4:	80 e9       	ldi	r24, 0x90	; 144
+ 5d6:	90 e0       	ldi	r25, 0x00	; 0
+ 5d8:	0e 94 c7 02 	call	0x58e	; 0x58e <DS1302_write>
+ 5dc:	08 95       	ret
+
+000005de <_exit>:
+ 5de:	f8 94       	cli
+
+000005e0 <__stop_program>:
+ 5e0:	ff cf       	rjmp	.-2      	; 0x5e0 <__stop_program>
